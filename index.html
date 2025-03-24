@@ -5,31 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Button</title>
   <link rel="stylesheet" href="style.css">
-  <script src="main.js"></script>
+  <script>
+    // Adds a temporary glare effect class to widget buttons on click/touch, preventing rapid repeated triggers.
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('.tr-widget__btn');
+      const glareAnimeClass = 'is-glare';
+
+      buttons.forEach(btn => {
+        const addTemporaryClass = () => {
+          if (btn.classList.contains(glareAnimeClass)) return;
+
+          btn.classList.add(glareAnimeClass);
+
+          setTimeout(() => {
+            btn.classList.remove(glareAnimeClass);
+          }, 500);
+        };
+
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          addTemporaryClass();
+        });
+
+        btn.addEventListener('touchstart', () => {
+          addTemporaryClass();
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="example-box">
-    <div class="widget">
-      <span class="widget__preloader" role="status">
+    <div class="tr-widget">
+      <span class="tr-widget__preloader" role="status">
         <span class="visually-hidden">Loading...</span>
       </span>
-      <a class="btn" href="#">
-        <span class="btn__text">CONNECT</span>
-        <span class="btn__logo">
-          <img src="logo.png" alt="image description">
+      <a class="tr-widget__btn" href="#">
+        <span class="tr-widget__btn-text">CONNECT</span>
+        <span class="tr-widget__btn-logo">
+          <img src="images/TT_Alumni Association Logo_REVERSED ASSOC_RGB BLACK.png" alt="image description">
         </span>
       </a>
     </div>
   </div>
   <div class="example-box example-dark">
-    <div class="widget widget--dark">
-      <span class="widget__preloader" role="status">
+    <!-- Add class "tr-widget--dark" for dark theme styles -->
+    <div class="tr-widget tr-widget--dark">
+      <span class="tr-widget__preloader" role="status">
         <span class="visually-hidden">Loading...</span>
       </span>
-      <a class="btn" href="#">
-        <span class="btn__text">CONNECT</span>
-        <span class="btn__logo">
-          <img src="logo.png" alt="image description">
+      <a class="tr-widget__btn" href="#">
+        <span class="tr-widget__btn-text">CONNECT</span>
+        <span class="tr-widget__btn-logo">
+          <img src="images/TT_Alumni Association Logo_REVERSED ASSOC_RGB.png" alt="image description">
         </span>
       </a>
     </div>

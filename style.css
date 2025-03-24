@@ -1,71 +1,77 @@
+/* Main variables for color scheme and animations */
 :root {
-  --btn-background: #fff;
-  --btn-color: #000;
+  --light-color-rgb: 255, 255, 255;
+  --dark-color-rgb: 0, 0, 0;
+  --light-color: #fff;
+  --dark-color: #000;
+  --animation-speed: 6s;
 }
 
+/* Start temporary code for example styles */
 .example-box {
   padding: 50px;
-  background-color: #fff;
+  background-color: var(--light-color);
 }
 
 .example-box.example-dark {
-  background-color: #000;
+  background-color: var(--dark-color);
 }
 
-.widget {
-  box-sizing: border-box;
+.example-box .tr-widget {
   display: flex;
   justify-content: center;
+}
+/* End temporary code for example styles */
 
-  * {
-    box-sizing: inherit;
-  }
+/* Basic container styles */
+.tr-widget,
+.tr-widget * {
+  box-sizing: border-box;
 }
 
-.btn {
-  font-family: Arial, Helvetica, sans-serif;
+/* Widget button styles */
+.tr-widget__btn {
+  font: 400 16px/1.4 Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   text-transform: uppercase;
-  color: #000;
-  background-color: #fff;
-  font-size: 16px;
-  line-height: 1.4;
-  letter-spacing: 1px;
-  font-weight: 400;
+  overflow: hidden;
+  color: var(--dark-color);
+  background-color: var(--light-color);
   padding: 4px;
   border-radius: 50rem;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
-  animation: btn-animation 6s ease infinite forwards;
+  box-shadow: 0 3px 5px rgba(var(--dark-color-rgb), 0.1);
+  animation: btn-animation var(--animation-speed) ease 1 forwards;
   transform-origin: center bottom;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.widget--dark .btn {
-  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.3);
-  background-color: #000;
-  color: #fff;
+/* Glare effect on button */
+.tr-widget__btn::after {
+  transition: left 0.3s linear;
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -100px;
+  width: 80px;
+  background-image: linear-gradient(to right, rgba(var(--light-color-rgb), 0) 0%,rgba(var(--light-color-rgb), 0) 5%,rgba(var(--light-color-rgb), 0.8) 40%,rgba(var(--light-color-rgb), 0.8) 60%,rgba(var(--light-color-rgb), 0) 95%,rgba(var(--light-color-rgb), 0) 100%);
+  transform: skewX(-25deg);
 }
 
-.widget--dark .btn__logo {
-  background-color: transparent;
-  box-shadow: inset 1px 4px 5px rgba(255, 255, 255, 0.25);
+.tr-widget__btn:hover .tr-widget__btn-text {
+  width: 130px;
+  padding: 0 20px;
 }
 
-.widget--dark .btn__text::before {
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 1) 100%);
+.tr-widget__btn:hover .tr-widget__btn-text::before {
+  width: 0;
 }
 
-.widget--dark .widget__preloader {
-  background-color: #000;
-  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.3);
-}
-
-.widget--dark .widget__preloader::before {
-  border-color: #000 #000 #000 transparent;
-}
-
-.btn__logo {
+/* Button logo styles */
+.tr-widget__btn-logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,60 +80,69 @@
   height: 48px;
   background-color: #f3f3f3;
   border-radius: 50rem;
-  box-shadow: inset 1px 4px 5px rgba(0, 0, 0, 0.25);
-  animation: btn-logo-animation 6s ease infinite forwards;
+  box-shadow: inset 1px 4px 5px rgba(var(--dark-color-rgb), 0.25);
+  animation: btn-logo-animation var(--animation-speed) ease 1 forwards;
 }
 
-.btn__logo img {
+.tr-widget__btn-logo img {
   display: block;
   width: 32px;
   height: 32px;
   object-fit: contain;
 }
 
-.btn__text {
+/* Button text container styles */
+.tr-widget__btn-text {
+  transition: width 0.5s ease, padding 0.5s ease;
   text-align: center;
   white-space: nowrap;
   width: 0;
-  padding: 0 20px;
+  padding: 0;
   overflow: hidden;
   position: relative;
-  animation: btn-text-animation 6s ease infinite forwards;
+  animation: btn-text-animation var(--animation-speed) ease 1;
+  animation-fill-mode: none;
 }
 
-.btn__text::before {
+/* Gradient covering text */
+.tr-widget__btn-text::before {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: 50px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 40%, rgba(255, 255, 255, 1) 100%);
-  animation: btn-gradient-animation 6s ease infinite forwards;
+  width: 100%;
+  transition: width 0.5s ease;
+  background-image: linear-gradient(to right, rgba(var(--light-color-rgb), 0) 0%, rgba(var(--light-color-rgb), 0.5) 40%, rgba(var(--light-color-rgb), 1) 100%);
+  animation: btn-text-gradient-animation var(--animation-speed) ease 1;
+  animation-fill-mode: none;
 }
 
-.widget__preloader {
+/* Preloader styles */
+.tr-widget__preloader {
   width: 56px;
   height: 56px;
   margin: 0 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   border-radius: 10px;
-  background-image: linear-gradient(135deg, rgba(254,222,142,1) 0%,rgba(249,123,102,1) 25%,rgba(233,57,198,1) 50%,rgba(134,47,174,1) 75%,rgba(26,79,191,1) 100%);
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(135deg, rgba(254, 222, 142, 1) 0%,rgba(249, 123, 102, 1) 25%,rgba(233, 57, 198, 1) 50%,rgba(134, 47, 174, 1) 75%,rgba(26, 79, 191, 1) 100%);
+  box-shadow: 0 3px 5px rgba(var(--dark-color-rgb), 0.1);
 }
 
-.widget__preloader::before {
+.tr-widget__preloader::before {
   content: '';
   width: 24px;
   height: 24px;
   border: 4px solid;
-  border-color: #fff #fff #fff transparent;
   border-radius: 50rem;
+  border-color: var(--light-color) var(--light-color) var(--light-color) transparent;
   animation: loader 1s linear infinite forwards;
 }
 
+/* Visually hidden text (screen readers only) */
 .visually-hidden {
   width: 1px !important;
   height: 1px !important;
@@ -139,115 +154,85 @@
   border: 0 !important;
 }
 
+/* Start dark theme styles */
+.tr-widget--dark .tr-widget__btn {
+  box-shadow: 0 3px 8px rgba(var(--light-color-rgb), 0.3);
+  background-color: var(--dark-color);
+  color: var(--light-color);
+}
+
+.tr-widget--dark .tr-widget__btn::after {
+  width: 50px;
+}
+
+.tr-widget--dark .tr-widget__btn-logo {
+  background-color: var(--light-color);
+}
+
+.tr-widget--dark .tr-widget__btn-text::before {
+  background-image: linear-gradient(to right, rgba(var(--dark-color-rgb), 0) 0%, rgba(var(--dark-color-rgb), 0.5) 40%, rgba(var(--dark-color-rgb), 1) 100%);
+}
+
+.tr-widget--dark .tr-widget__preloader {
+  background-color: var(--dark-color);
+  box-shadow: 0 3px 8px rgba(var(--light-color-rgb), 0.3);
+}
+
+.tr-widget--dark .tr-widget__preloader::before {
+  border-color: var(--dark-color) var(--dark-color) var(--dark-color) transparent;
+}
+
+/* END dark theme styles */
+
+/* Glare animation triggered after click */
+.tr-widget__btn.is-glare::after {
+  animation: btn-glare-animation 0.5s ease 1;
+  animation-fill-mode: none;
+}
+
+/* Keyframes for button scale animation */
 @keyframes btn-animation {
-  0% {
-    transform: scale(0);
-  }
-
-  10% {
-    transform: scale(1);
-  }
-
-  90% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(0);
-  }
+  0% { transform: scale(0); }
+  10% { transform: scale(1); }
+  100% { transform: scale(1); }
 }
 
+/* Keyframes for glare animation */
+@keyframes btn-glare-animation {
+  0% { left: -100px; }
+  100% { left: 100%; }
+}
+
+/* Keyframes for logo scale animation */
 @keyframes btn-logo-animation {
-  0% {
-    transform: scale(1.1);
-  }
-
-  10% {
-    transform: scale(1.1);
-  }
-
-  15% {
-    transform: scale(1);
-  }
-
-  85% {
-    transform: scale(1);
-  }
-
-  90% {
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1.1);
-  }
+  0% { transform: scale(1.1); }
+  10% { transform: scale(1.1); }
+  15% { transform: scale(1); }
+  100% { transform: scale(1); }
 }
 
+/* Keyframes for button text animation */
 @keyframes btn-text-animation {
-  0% {
-    width: 0;
-    padding: 0;
-  }
-
-  15% {
-    width: 0;
-    padding: 0;
-  }
-
-  22% {
-    width: 130px;
-    padding: 0 20px;
-  }
-
-  78% {
-    width: 130px;
-    padding: 0 20px;
-  }
-
-  85% {
-    width: 0;
-    padding: 0;
-  }
-
-  100% {
-    width: 0;
-    padding: 0;
-  }
+  0% { width: 0; padding: 0; }
+  15% { width: 0; padding: 0; }
+  22% { width: 130px; padding: 0 20px; }
+  78% { width: 130px; padding: 0 20px; }
+  85% { width: 0; padding: 0; }
+  100% { width: 0; padding: 0; }
 }
 
-@keyframes btn-gradient-animation {
-  0% {
-    width: 100%;
-  }
-
-  15% {
-    width: 100%;
-  }
-
-  25% {
-    width: 0;
-  }
-
-
-  75% {
-    width: 0;
-  }
-
-  85% {
-    width: 100%;
-  }
-
-  100% {
-    width: 100%;
-  }
+/* Keyframes for button text gradient animation */
+@keyframes btn-text-gradient-animation {
+  0% { width: 100%; }
+  15% { width: 100%; }
+  25% { width: 0; }
+  75% { width: 0; }
+  85% { width: 100%; }
+  100% { width: 100%; }
 }
 
+/* Keyframes for preloader rotation animation */
 @keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
