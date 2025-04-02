@@ -6,50 +6,71 @@
   <title>Button</title>
   <link rel="stylesheet" href="style.css">
   <script>
-    // Adds a temporary glare effect class to widget buttons on click/touch, preventing rapid repeated triggers.
     document.addEventListener('DOMContentLoaded', () => {
-      const buttons = document.querySelectorAll('.tr-widget__btn');
+      const widgets = document.querySelectorAll('.tr-widget');
       const glareAnimeClass = 'is-glare';
 
-      buttons.forEach(btn => {
-        const addTemporaryClass = () => {
-          if (btn.classList.contains(glareAnimeClass)) return;
+      widgets.forEach(widget => {
+        const preloader = widget.querySelector('.tr-widget__preloader');
+        const btn = widget.querySelector('.tr-widget__btn');
 
-          btn.classList.add(glareAnimeClass);
+        if (btn) {
+          btn.style.display = 'none';
+        }
 
-          setTimeout(() => {
-            btn.classList.remove(glareAnimeClass);
-          }, 500);
-        };
+        setTimeout(() => {
+          if (preloader) {
+            preloader.remove();
+          }
 
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          addTemporaryClass();
-        });
+          if (btn) {
+            btn.style.display = 'inline-flex';
+          }
 
-        btn.addEventListener('touchstart', () => {
-          addTemporaryClass();
-        });
+          // === GLARE EFFECT (temporarily disabled) ===
+          /*
+          const addTemporaryClass = () => {
+            if (btn.classList.contains(glareAnimeClass)) return;
+            btn.classList.add(glareAnimeClass);
+
+            setTimeout(() => {
+              btn.classList.remove(glareAnimeClass);
+            }, 500);
+          };
+
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            addTemporaryClass();
+          });
+
+          btn.addEventListener('touchstart', () => {
+            addTemporaryClass();
+          });
+          */
+        }, 1000);
       });
     });
   </script>
 </head>
 <body>
   <div class="example-box">
+    <!-- START widget code -->
+    <!-- Add class "tr-widget--dark" for dark theme styles -->
     <div class="tr-widget">
       <span class="tr-widget__preloader" role="status">
         <span class="visually-hidden">Loading...</span>
       </span>
-      <a class="tr-widget__btn" href="#">
+      <a class="tr-widget__btn" href="#" style="display: none;">
         <span class="tr-widget__btn-text">CONNECT</span>
         <span class="tr-widget__btn-logo">
           <img src="images/TT_Alumni Association Logo_REVERSED ASSOC_RGB BLACK.png" alt="image description">
         </span>
       </a>
     </div>
+    <!-- END widget code -->
   </div>
-  <div class="example-box example-dark">
-    <!-- Add class "tr-widget--dark" for dark theme styles -->
+  <div class="example-box">
+    <!-- START Widget dark theme code (add class "tr-widget--dark") -->
     <div class="tr-widget tr-widget--dark">
       <span class="tr-widget__preloader" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -61,6 +82,7 @@
         </span>
       </a>
     </div>
+    <!-- END Widget dark theme code -->
   </div>
 </body>
 </html>
