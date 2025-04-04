@@ -4,7 +4,7 @@
   --dark-color-rgb: 0, 0, 0;
   --light-color: #fff;
   --dark-color: #000;
-  --animation-speed: 6s;
+  --animation-speed: 1.8s;
   --btn-text-padding-x: 15px;
   --btn-text-width: 120px;
 }
@@ -58,14 +58,14 @@
   transform: skewX(-25deg);
 }
 
-.tr-widget__btn:hover .tr-widget__btn-text {
+/* .tr-widget__btn:hover .tr-widget__btn-text {
   width: var(--btn-text-width);
   padding: 0 var(--btn-text-padding-x);
 }
 
 .tr-widget__btn:hover .tr-widget__btn-text::before {
   width: 0;
-}
+} */
 
 /* Button logo styles */
 .tr-widget__btn-logo {
@@ -93,8 +93,8 @@
   transition: width 0.5s ease, padding 0.5s ease;
   text-align: center;
   white-space: nowrap;
-  width: 0;
-  padding: 0;
+  width: var(--btn-text-width);
+  padding: 0 var(--btn-text-padding-x);
   overflow: hidden;
   position: relative;
   animation: btn-text-animation var(--animation-speed) ease 1;
@@ -108,7 +108,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
+  width: 0;
   transition: width 0.5s ease;
   background-image: linear-gradient(to right, rgba(var(--light-color-rgb), 0) 0%, rgba(var(--light-color-rgb), 0.5) 40%, rgba(var(--light-color-rgb), 1) 100%);
   animation: btn-text-gradient-animation var(--animation-speed) ease 1;
@@ -218,7 +218,7 @@
 /* Keyframes for button scale animation */
 @keyframes btn-animation {
   0% { transform: scale(0); }
-  10% { transform: scale(1); }
+  40% { transform: scale(1); }
   100% { transform: scale(1); }
 }
 
@@ -231,12 +231,54 @@
 /* Keyframes for logo scale animation */
 @keyframes btn-logo-animation {
   0% { transform: scale(1.1); }
+  40% { transform: scale(1.1); }
+  50% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/* Keyframes for button text animation */
+@keyframes btn-text-animation {
+  0% { width: 0; padding: 0; }
+  50% { width: 0; padding: 0; }
+  65% { width: var(--btn-text-width); padding: 0 var(--btn-text-padding-x); }
+  100% { width: var(--btn-text-width); padding: 0 var(--btn-text-padding-x); }
+}
+
+/* Keyframes for button text gradient animation */
+@keyframes btn-text-gradient-animation {
+  0% { width: 100%; }
+  50% { width: 100%; }
+  70% { width: 0; }
+  100% { width: 0; }
+}
+
+/* Keyframes for preloader rotation animation */
+@keyframes loader {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* START Variant 2 hint button styles */
+
+/* @keyframes btn-animation {
+  0% { transform: scale(0); }
+  10% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes btn-glare-animation {
+  0% { left: -100px; }
+  100% { left: 100%; }
+}
+
+@keyframes btn-logo-animation {
+  0% { transform: scale(1.1); }
   10% { transform: scale(1.1); }
   15% { transform: scale(1); }
   100% { transform: scale(1); }
 }
 
-/* Keyframes for button text animation */
 @keyframes btn-text-animation {
   0% { width: 0; padding: 0; }
   15% { width: 0; padding: 0; }
@@ -246,7 +288,6 @@
   100% { width: 0; padding: 0; }
 }
 
-/* Keyframes for button text gradient animation */
 @keyframes btn-text-gradient-animation {
   0% { width: 100%; }
   15% { width: 100%; }
@@ -256,8 +297,9 @@
   100% { width: 100%; }
 }
 
-/* Keyframes for preloader rotation animation */
 @keyframes loader {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+} */
+
+/* END variant 2 styles */
